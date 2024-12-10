@@ -5,11 +5,18 @@
     <div class="m-3 detail_container">
       <div class="p-3">
         <div class="detail_inner_head">
+          @if($errors->first('post_title'))
+        <span class="error_message">{{ $errors->first('post_title') }}</span>
+      @endif
           <div>
           </div>
           <div>
+            @if ($user_id == $post->user_id)
+      <!-- ↑これで自分の投稿のみ編集・削除できる -->
             <span class="edit-modal-open" post_title="{{ $post->post_title }}" post_body="{{ $post->post }}" post_id="{{ $post->id }}">編集</span>
-            <a href="{{ route('post.delete', ['id' => $post->id]) }}">削除</a>
+            <!-- 削除機能 -->
+            <a href="{{ route('post.delete', ['id' => $post->id]) }}" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')">削除</a>
+            @endif
           </div>
         </div>
 
@@ -20,6 +27,9 @@
             さん
           </p>
           <span class="ml-5">{{ $post->created_at }}</span>
+          @if($errors->first('post_body'))
+      <span class="error_message">{{ $errors->first('post_body') }}</span>
+      @endif
         </div>
         <div class="detsail_post_title">{{ $post->post_title }}</div>
         <div class="mt-3 detsail_post">{{ $post->post }}</div>
@@ -52,6 +62,7 @@
     </div>
   </div>
 </div>
+<!-- モーダルの中身 -->
 <div class="modal js-modal">
   <div class="modal__bg js-modal-close"></div>
   <div class="modal__content">

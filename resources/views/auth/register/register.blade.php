@@ -83,8 +83,8 @@
                 </div>
                 <div class="mt-3">
                     <label class="d-block m-0 aa" style="font-size:13px">生年月日</label>
-                    @if ($errors->has('datetime_validation.date'))
-                        <div class="error">{{ $errors->first('datetime_validation.date') }}</div>
+                    @if ($errors->has('datetime_validation'))
+                        <div class="error">{{ $errors->first('datetime_validation') }}</div>
                     @endif
                     <select class="old_year" name="old_year">
                         <option value="none">-----</option>
@@ -114,11 +114,10 @@
                         <option value="2008">2008</option>
                         <option value="2009">2009</option>
                         <option value="2010">2010</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
                     </select>
                     <label style="font-size:13px">年</label>
-                    @if ($errors->has('datetime_validation.date'))
-                        <div class="error">{{ $errors->first('datetime_validation.date') }}</div>
-                    @endif
                     <select class="old_month" name="old_month">
                         <option value="none">-----</option>
                         <option value="01">1</option>
@@ -135,9 +134,6 @@
                         <option value="12">12</option>
                     </select>
                     <label style="font-size:13px">月</label>
-                    @if ($errors->has('datetime_validation.date'))
-                        <div class="error">{{ $errors->first('datetime_validation.date') }}</div>
-                    @endif
                     <select class="old_day" name="old_day">
                         <option value="none">-----</option>
                         <option value="01">1</option>

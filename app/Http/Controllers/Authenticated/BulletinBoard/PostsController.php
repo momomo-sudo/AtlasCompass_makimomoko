@@ -16,7 +16,7 @@ use Auth;
 class PostsController extends Controller
 {
     public function show(Request $request){
-        $posts = Post::with('user', 'postComments')->get();
+        $posts = Post::with('user', 'postComments')->withCount('likes')->get(); //投稿一覧を取得（コメントといいね数）
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
@@ -35,12 +35,16 @@ class PostsController extends Controller
             $posts = Post::with('user', 'postComments')
             ->where('user_id', Auth::id())->get();
         }
-        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment'));
+        return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment' ));
     }
 
+    //投稿詳細画面
     public function postDetail($post_id){
+
+
+        $user_id = Auth::id();
         $post = Post::with('user', 'postComments')->findOrFail($post_id);
-        return view('authenticated.bulletinboard.post_detail', compact('post'));
+        return view('authenticated.bulletinboard.post_detail', compact('post', 'user_id' ));
     }
 
     public function postInput(){
@@ -57,7 +61,7 @@ class PostsController extends Controller
         return redirect()->route('post.show');
     }
 
-    public function postEdit(Request $request){
+    public function postEdit(PostFormRequest $request){
         Post::where('id', $request->post_id)->update([
             'post_title' => $request->post_title,
             'post' => $request->post_body,
